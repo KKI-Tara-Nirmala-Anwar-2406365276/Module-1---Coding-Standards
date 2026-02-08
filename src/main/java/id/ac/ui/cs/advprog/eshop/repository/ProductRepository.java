@@ -14,11 +14,12 @@ public class ProductRepository {
 
     public Product create(Product product) {
         if (product.getProductId() == null || product.getProductId().isEmpty()) {
-            product.setProductId(UUID.randomUUID().toString());
+            product.setProductId(java.util.UUID.randomUUID().toString());
         }
         productData.add(product);
         return product;
     }
+
 
     public Iterator<Product> findAll() {
         return productData.iterator();
@@ -43,4 +44,17 @@ public class ProductRepository {
         }
         return null;
     }
+
+    public boolean delete(String id) {
+        java.util.Iterator<Product> iterator = productData.iterator();
+        while (iterator.hasNext()) {
+            Product product = iterator.next();
+            if (product.getProductId().equals(id)) {
+                iterator.remove();
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
