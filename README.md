@@ -24,6 +24,7 @@ In addition, the data is stored in memory, so it will be lost when the applicati
 Overall, this exercise helped me understand how applying clean code principles and proper structure can make an application easier to develop, read, and maintain.
 
 Reflection 2
+
 After writing the unit tests, I felt more confident about my code.
 Testing helped me see whether each feature actually worked as expected, especially for cases like editing or deleting a product that does not exist.
 
