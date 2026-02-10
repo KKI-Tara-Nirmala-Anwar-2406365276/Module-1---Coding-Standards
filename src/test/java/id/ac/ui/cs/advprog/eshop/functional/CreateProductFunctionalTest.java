@@ -7,9 +7,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+
+import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -33,11 +37,13 @@ class CreateProductFunctionalTest {
 
     @Test
     void createProduct_shouldAppearInProductList(ChromeDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
         // 1) Open create product page
         driver.get(baseUrl + "/product/create");
 
         // 2) Fill the form
-        WebElement nameInput = driver.findElement(By.id("nameInput"));
+        WebElement nameInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("nameInput")));
         WebElement quantityInput = driver.findElement(By.id("quantityInput"));
 
         String productName = "Functional Test Product";
@@ -49,13 +55,15 @@ class CreateProductFunctionalTest {
         quantityInput.clear();
         quantityInput.sendKeys(productQty);
 
-        // 3) Submit the form
+        // 3) Submit
         driver.findElement(By.cssSelector("button[type='submit']")).click();
 
-        // 4) Redirects to list
-        // verify product name appears in page source (simple + reliable)
-        String pageSource = driver.getPageSource();
-        assertTrue(pageSource.contains(productName),
-                "Expected product name to appear in product list page.");
+        // 4) open the list page
+        driver.get(baseUrl + "/product/list");
+
+        // 5) visible in the list
+        WebElement body = wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+        assertTrue(body.getText().contains(productName),
+                "Expected product name to appear in product list.");
     }
 }
