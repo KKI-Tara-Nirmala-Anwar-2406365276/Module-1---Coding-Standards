@@ -22,3 +22,20 @@ This could be improved by adding input validation and proper error handling.
 In addition, the data is stored in memory, so it will be lost when the application stops. In the future, this can be improved by using a database.
 
 Overall, this exercise helped me understand how applying clean code principles and proper structure can make an application easier to develop, read, and maintain.
+
+Reflection 2
+After writing the unit tests, I felt more confident about my code.
+Testing helped me see whether each feature actually worked as expected, especially for cases like editing or deleting a product that does not exist.
+
+There is no fixed number of unit tests that must be written in a class. 
+What matters is that all important logic is tested. 
+In this exercise, I tested both positive and negative scenarios to make sure the program behaves correctly in different conditions. 
+To check whether tests are sufficient, code coverage can be used to see how much of the code is tested. 
+However, having 100% code coverage does not mean the program has no bugs. 
+Code coverage only shows that the code was executed, not that the logic is always correct.
+
+If I were to create another functional test to verify the number of items in the product list, the code would likely repeat the same setup logic as the previous functional tests. 
+This causes duplicated code, which reduces code cleanliness and makes maintenance harder. 
+If something changes in the setup, it would need to be updated in multiple places.
+To improve this, the shared setup code can be moved into a base functional test class or helper methods. 
+This reduces duplication and makes the functional tests easier to read, maintain, and extend in the future.
