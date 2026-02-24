@@ -40,3 +40,20 @@ This causes duplicated code, which reduces code cleanliness and makes maintenanc
 If something changes in the setup, it would need to be updated in multiple places.
 To improve this, the shared setup code can be moved into a base functional test class or helper methods. 
 This reduces duplication and makes the functional tests easier to read, maintain, and extend in the future.
+
+Reflection Module 4.2
+1. Code quality issues that I fixed and how I fixed them
+
+During this exercise, the code analysis workflow detected issues related to code quality and test coverage. 
+One main issue I fixed was the lack of unit tests in the service layer. 
+To solve this, I added a new unit test (`ProductServiceImplTest`) to test the core logic of the product service, 
+such as creating and retrieving products.
+I focused on fixing issues by first checking the workflow output, then locating the exact part of the code that caused the warning. 
+
+2. Reflection on CI/CD implementation
+
+I think the current implementation already meets the definition of Continuous Integration and Continuous Deployment.
+Every time I push code to the repository, GitHub Actions automatically runs the test suites and performs code quality analysis. 
+This means code changes are continuously checked and validated, which matches the idea of Continuous Integration.
+For deployment, the application is connected to a PaaS (Render) that automatically redeploys the app when changes are pushed to the main branch. 
+This means deployment happens without manual steps, which satisfies Continuous Deployment.
