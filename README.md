@@ -57,3 +57,51 @@ Every time I push code to the repository, GitHub Actions automatically runs the 
 This means code changes are continuously checked and validated, which matches the idea of Continuous Integration.
 For deployment, the application is connected to a PaaS (Render) that automatically redeploys the app when changes are pushed to the main branch. 
 This means deployment happens without manual steps, which satisfies Continuous Deployment.
+
+Reflection 3
+1. Principles that I applied
+
+Single Responsibility Principle (SRP)
+I applied SRP by separating CarController from ProductController.
+Before refactoring, both product and car logic were placed in the same file, which means the class had more than one responsibility.
+After the refactor, each controller only handles one domain.
+ProductController handles product features, and CarController handles car features.
+Now each class has only one reason to change.
+
+Dependency Inversion Principle (DIP)
+I applied DIP by making the controller depend on the CarService interface instead of the concrete `CarServiceImpl` class.
+This means the high-level module (controller) depends on an abstraction.
+The implementation can be changed without affecting the controller.
+For example, if I later change the service implementation to use a database instead of in-memory storage, the controller does not need to change.
+
+Interface Segregation Principle (ISP)
+I applied ISP by splitting CarService into smaller interfaces: CarReadService and CarWriteService.
+Instead of having one large interface, I separated read operations and write operations.
+This makes the interfaces more specific and focused.
+Classes only depend on the methods they actually need.
+
+Open Closed Principle (OCP)
+The project follows OCP because new features can be added by extending the system instead of modifying existing logic.
+For example, the Car module was added by creating new classes (model, repository, service, controller, and templates) without changing the existing product feature.
+The system is open for extension but does not require modification of existing modules.
+
+Liskov Substitution Principle (LSP)
+Although there is no complex inheritance structure in this project, the design supports substitutability.
+For example, CarServiceImpl can be replaced with another implementation of CarService without affecting the controller.
+This keeps the behavior consistent and maintains correctness.
+
+2. Advantages of applying SOLID principles
+Applying SOLID makes the code easier to understand and maintain. 
+- With SRP, each class has a clear responsibility, so it is easier to debug and modify. 
+- With DIP, the controller is not tightly coupled to implementation details. 
+- With ISP, interfaces are cleaner and not overloaded with unnecessary methods. 
+- With OCP, new features can be added without breaking existing functionality.
+
+Overall, the project becomes more structured and scalable.
+
+3. Disadvantages of not applying SOLID principles
+If SOLID principles were not applied, the code would become harder to manage as the project grows.
+- Without SRP, classes would become large and difficult to maintain. 
+- Without DIP, changing implementations would require modifying many parts of the code. 
+- Without ISP, interfaces could become too complex and force classes to implement methods they do not use. 
+- Without OCP, adding new features would require modifying existing classes, increasing the risk of bugs.
