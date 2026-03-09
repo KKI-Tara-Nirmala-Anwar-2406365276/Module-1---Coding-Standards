@@ -105,3 +105,37 @@ If SOLID principles were not applied, the code would become harder to manage as 
 - Without DIP, changing implementations would require modifying many parts of the code. 
 - Without ISP, interfaces could become too complex and force classes to implement methods they do not use. 
 - Without OCP, adding new features would require modifying existing classes, increasing the risk of bugs.
+
+Reflection 4
+1. Percival
+In this module I followed the Test Driven Development workflow while implementing the Order feature, including the model, repository, and service layers. 
+The process followed the RED–GREEN–REFACTOR cycle where tests are written first, then the code is implemented until the tests pass, and finally the code is improved. 
+Based on the self reflective questions proposed by Percival (2017), I think this TDD flow is useful because it forces me to clearly define the expected behavior before writing the implementation. 
+The tests act as a guide for development and help ensure that the logic works as intended.
+
+During the exercise, writing the tests first made it easier to understand what each method should do, such as creating an order, updating the order status, and retrieving orders. 
+When running the tests, I could immediately see which parts of the implementation were incorrect. 
+This helped me detect mistakes earlier and made debugging more focused. 
+The use of mocking in the service tests also helped isolate the service logic from the repository layer.
+
+However, using TDD also requires careful planning of the test scenarios. 
+If the tests do not fully represent the required behavior, the implementation may still contain logical problems even though all tests pass. 
+In the future, when writing tests, I should think more about edge cases and invalid inputs before implementing the code so that the tests better represent real usage conditions.
+
+2. F.I.R.S.T
+The unit tests written in this tutorial generally follow the FIRST principle. 
+The tests are fast because they only test small parts of the application and use in memory data instead of external systems. 
+For the service layer, Mockito is used to mock the repository, which keeps the tests lightweight and quick to run.
+
+The tests are independent because each test case prepares its own data in the setup method. 
+This prevents tests from affecting each other. 
+They are also repeatable because the environment is reset before every test, which means the tests produce the same results every time they are executed.
+
+The tests are self validating because they use assertions such as assertEquals, assertNull, and assertThrows to automatically determine whether the expected behavior occurs. 
+This removes the need for manual verification.
+
+The tests are also timely because they were written before implementing the logic, following the TDD workflow where the expected behavior is defined first and the implementation is created afterward.
+
+Although the tests already follow the FIRST principle fairly well, there is still room for improvement. 
+Some setup logic is repeated when creating products and orders, which could be simplified using helper methods or shared test utilities. 
+This would make the tests cleaner and easier to maintain in the future.
