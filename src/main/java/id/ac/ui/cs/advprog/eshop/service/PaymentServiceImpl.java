@@ -11,6 +11,10 @@ import java.util.Map;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    private static final String SUCCESS = "SUCCESS";
+    private static final String REJECTED = "REJECTED";
+    private static final String FAILED = "FAILED";
+
     @Autowired
     private PaymentRepository paymentRepository;
 
@@ -24,12 +28,7 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment setStatus(Payment payment, String status) {
         payment.setStatus(status);
-
-        if (status.equals("SUCCESS")) {
-            payment.getOrder().setStatus("SUCCESS");
-        } else if (status.equals("REJECTED")) {
-            payment.getOrder().setStatus("FAILED");
-        }
+        updateOrderStatus(payment.getOrder(), status);
 
         paymentRepository.save(payment);
         return payment;
@@ -43,6 +42,14 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
+    }
+
+    private void updateOrderStatus(Order order, String status) {
+        if (status.equals(SUCCESS)) {
+            order.setStatus(SUCCESS);
+        } else if (status.equals(REJECTED)) {
+            order.setStatus(FAILED);
+        }
     }
 
 }
