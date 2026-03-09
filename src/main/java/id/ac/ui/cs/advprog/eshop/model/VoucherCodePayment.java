@@ -15,24 +15,21 @@ public class VoucherCodePayment {
 
     public VoucherCodePayment(Map<String, String> paymentData) {
         this.paymentData = paymentData;
-
-        String voucherCode = paymentData.get("voucherCode");
-        if (voucherCode != null && voucherCode.length() == 16 && voucherCode.startsWith("ESHOP")) {
-            int digitCount = 0;
-            for (char c : voucherCode.toCharArray()) {
-                if (Character.isDigit(c)) {
-                    digitCount += 1;
-                }
-            }
-
-            if (digitCount == 8) {
-                this.status = SUCCESS;
-            } else {
-                this.status = REJECTED;
-            }
-        } else {
-            this.status = REJECTED;
-        }
+        this.status = isValidVoucher(paymentData.get("voucherCode")) ? SUCCESS : REJECTED;
     }
 
+    private boolean isValidVoucher(String voucherCode) {
+        if (voucherCode == null || voucherCode.length() != 16 || !voucherCode.startsWith("ESHOP")) {
+            return false;
+        }
+
+        int digitCount = 0;
+        for (char c : voucherCode.toCharArray()) {
+            if (Character.isDigit(c)) {
+                digitCount += 1;
+            }
+        }
+
+        return digitCount == 8;
+    }
 }
