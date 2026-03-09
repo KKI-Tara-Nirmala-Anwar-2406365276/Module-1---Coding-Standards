@@ -17,8 +17,12 @@ public class Payment {
 
     @Setter
     String id;
+
     String method;
+
+    @Setter
     String status;
+
     Map<String, String> paymentData;
     Order order;
 

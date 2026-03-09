@@ -15,15 +15,34 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentRepository paymentRepository;
 
     @Override
-    public Payment addPayment(Order order, String method, Map<String, String> paymentData) {return null;}
+    public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
+        Payment payment = new Payment(order, method, paymentData);
+        paymentRepository.save(payment);
+        return payment;
+    }
 
     @Override
-    public Payment setStatus(Payment payment, String status) {return null;}
+    public Payment setStatus(Payment payment, String status) {
+        payment.setStatus(status);
+
+        if (status.equals("SUCCESS")) {
+            payment.getOrder().setStatus("SUCCESS");
+        } else if (status.equals("REJECTED")) {
+            payment.getOrder().setStatus("FAILED");
+        }
+
+        paymentRepository.save(payment);
+        return payment;
+    }
 
     @Override
-    public Payment getPayment(String paymentId) {return null;}
+    public Payment getPayment(String paymentId) {
+        return paymentRepository.findById(paymentId);
+    }
 
     @Override
-    public List<Payment> getAllPayments() {return null;}
+    public List<Payment> getAllPayments() {
+        return paymentRepository.findAll();
+    }
 
 }
