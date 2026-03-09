@@ -8,6 +8,12 @@ import java.util.UUID;
 @Getter
 public class Payment {
 
+    private static final String VOUCHER_CODE = "VOUCHER_CODE";
+    private static final String BANK_TRANSFER = "BANK_TRANSFER";
+    private static final String SUCCESS = "SUCCESS";
+    private static final String REJECTED = "REJECTED";
+    private static final String PENDING = "PENDING";
+
     String id;
     String method;
     String status;
@@ -20,34 +26,34 @@ public class Payment {
         this.method = method;
         this.paymentData = paymentData;
 
-        if (method.equals("VOUCHER_CODE")) {
-            String voucherCode = paymentData.get("voucherCode");
-            if (voucherCode.length() == 16 && voucherCode.startsWith("ESHOP")) {
-                int digitCount = 0;
-                for (char c : voucherCode.toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        digitCount += 1;
-                    }
-                }
+        if (method.equals(VOUCHER_CODE)) {
+            this.status = isValidVoucher(paymentData.get("voucherCode")) ? SUCCESS : REJECTED;
+        } else if (method.equals(BANK_TRANSFER)) {
+            this.status = isValidBankTransfer(paymentData) ? PENDING : REJECTED;
+        }
+    }
 
-                if (digitCount == 8) {
-                    this.status = "SUCCESS";
-                } else {
-                    this.status = "REJECTED";
-                }
-            } else {
-                this.status = "REJECTED";
-            }
-        } else if (method.equals("BANK_TRANSFER")) {
-            String bankName = paymentData.get("bankName");
-            String referenceCode = paymentData.get("referenceCode");
+    private boolean isValidVoucher(String voucherCode) {
+        if (voucherCode == null || voucherCode.length() != 16 || !voucherCode.startsWith("ESHOP")) {
+            return false;
+        }
 
-            if (bankName == null || bankName.isEmpty() || referenceCode == null || referenceCode.isEmpty()) {
-                this.status = "REJECTED";
-            } else {
-                this.status = "PENDING";
+        int digitCount = 0;
+        for (char c : voucherCode.toCharArray()) {
+            if (Character.isDigit(c)) {
+                digitCount += 1;
             }
         }
+
+        return digitCount == 8;
+    }
+
+    private boolean isValidBankTransfer(Map<String, String> paymentData) {
+        String bankName = paymentData.get("bankName");
+        String referenceCode = paymentData.get("referenceCode");
+
+        return bankName != null && !bankName.isEmpty()
+                && referenceCode != null && !referenceCode.isEmpty();
     }
 
 }
