@@ -1,6 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 import java.util.UUID;
@@ -14,6 +15,7 @@ public class Payment {
     private static final String REJECTED = "REJECTED";
     private static final String PENDING = "PENDING";
 
+    @Setter
     String id;
     String method;
     String status;

@@ -63,7 +63,7 @@ class PaymentRepositoryTest {
 
         Payment newPayment = new Payment(payment1.getOrder(),
                 payment1.getMethod(), payment1.getPaymentData());
-        newPayment.id = payment1.getId();
+        newPayment.setId(payment1.getId());
 
         Payment result = paymentRepository.save(newPayment);
 
