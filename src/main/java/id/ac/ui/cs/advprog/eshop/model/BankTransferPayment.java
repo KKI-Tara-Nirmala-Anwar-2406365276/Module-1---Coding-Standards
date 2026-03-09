@@ -15,15 +15,14 @@ public class BankTransferPayment {
 
     public BankTransferPayment(Map<String, String> paymentData) {
         this.paymentData = paymentData;
+        this.status = isValidBankTransfer(paymentData) ? PENDING : REJECTED;
+    }
 
+    private boolean isValidBankTransfer(Map<String, String> paymentData) {
         String bankName = paymentData.get("bankName");
         String referenceCode = paymentData.get("referenceCode");
 
-        if (bankName != null && !bankName.isEmpty()
-                && referenceCode != null && !referenceCode.isEmpty()) {
-            this.status = PENDING;
-        } else {
-            this.status = REJECTED;
-        }
+        return bankName != null && !bankName.isEmpty()
+                && referenceCode != null && !referenceCode.isEmpty();
     }
 }
