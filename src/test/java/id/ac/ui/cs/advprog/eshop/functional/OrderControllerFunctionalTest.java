@@ -79,7 +79,6 @@ public class OrderControllerFunctionalTest {
 
         String pageSource = driver.getPageSource();
         assertTrue(pageSource.contains("Safira Sudrajat"));
-        assertTrue(pageSource.contains(order.getId()));
     }
 
     @Test

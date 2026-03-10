@@ -11,8 +11,10 @@
 <p>Method: <span th:text="${payment.method}"></span></p>
 <p>Status: <span th:text="${payment.status}"></span></p>
 
+<p th:text="${updatedStatus}"></p>
+
 <form th:action="@{/payment/admin/set-status/{paymentId}(paymentId=${payment.id})}" method="post">
-    <label>Status:</label>
+    <label>Status</label>
     <input type="text" name="status"/>
 
     <br><br>

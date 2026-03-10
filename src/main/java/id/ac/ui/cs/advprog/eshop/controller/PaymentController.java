@@ -51,6 +51,7 @@ public class PaymentController {
         Payment payment = paymentService.getPayment(paymentId);
         Payment updatedPayment = paymentService.setStatus(payment, status);
         model.addAttribute("payment", updatedPayment);
+        model.addAttribute("updatedStatus", updatedPayment.getStatus());
         return "paymentAdminDetail";
     }
 }

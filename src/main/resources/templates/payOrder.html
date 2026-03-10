@@ -8,27 +8,29 @@
 <h2>Pay Order</h2>
 
 <form th:action="@{/order/pay/{orderId}(orderId=${orderId})}" method="post">
-    <label>Method:</label>
+
+    <label>Payment Method</label>
     <input type="text" name="method"/>
 
     <br><br>
 
-    <label>Voucher Code:</label>
+    <label>Voucher Code</label>
     <input type="text" name="voucherCode"/>
 
     <br><br>
 
-    <label>Bank Name:</label>
+    <label>Bank Name</label>
     <input type="text" name="bankName"/>
 
     <br><br>
 
-    <label>Reference Code:</label>
+    <label>Reference Code</label>
     <input type="text" name="referenceCode"/>
 
     <br><br>
 
     <button type="submit">Pay</button>
+
 </form>
 
 </body>
