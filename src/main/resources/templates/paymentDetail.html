@@ -6,9 +6,10 @@
 <body>
 
 <h2>Payment Detail</h2>
-<p th:text="${payment.id}"></p>
-<p th:text="${payment.method}"></p>
-<p th:text="${payment.status}"></p>
+
+<p>Payment ID: <span th:text="${payment.id}"></span></p>
+<p>Method: <span th:text="${payment.method}"></span></p>
+<p>Status: <span th:text="${payment.status}"></span></p>
 
 </body>
 </html>
